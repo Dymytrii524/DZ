@@ -1,0 +1,434 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система тестування</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .question-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options {
+            list-style: none;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+            .option:hover {
+                border-color: #667eea;
+                background: #f0f4ff;
+            }
+
+            .option input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+                margin-right: 12px;
+                cursor: pointer;
+                accent-color: #667eea;
+            }
+
+            .option label {
+                cursor: pointer;
+                flex: 1;
+                font-size: 16px;
+                color: #333;
+            }
+
+        .timer {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffc107;
+        }
+
+            .timer strong {
+                color: #ff6b6b;
+                font-size: 18px;
+            }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            }
+
+            .btn:active {
+                transform: translateY(0);
+            }
+
+        .result-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .result-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .result-text {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .result-score {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+
+        .close-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Система тестування</h1>
+        <div class="subtitle">AJAX + Apache + jQuery + JSON</div>
+
+        <div id="app">
+            <div class="loading">Завантаження тесту...</div>
+        </div>
+    </div>
+
+    <div id="resultDialog" class="result-dialog">
+        <div class="result-content">
+            <div class="result-text">Поздравляем, <span id="userName"></span>!</div>
+            <div class="result-score">Тест сдан на <span id="userScore"></span></div>
+            <button class="close-btn" onclick="closeDialog()">Закрити</button>
+        </div>
+    </div>
+
+    <script>
+
+        const testData = {
+            questions: [
+                {
+                    id: 1,
+                    question: "Для чего можно использовать JavaScript?",
+                    options: [
+                        "Для создания самостоятельной исполняемой программы",
+                        "Для обработки событий на web-странице",
+                        "Для добавления динамики и 'интеллекта' в web-страницу",
+                        "все варианты верны"
+                    ],
+                    correct: [1, 2]
+                },
+                {
+                    id: 2,
+                    question: "Що таке AJAX?",
+                    options: [
+                        "Мова програмування",
+                        "Технологія асинхронного обміну даними",
+                        "Фреймворк JavaScript",
+                        "Сервер бази даних"
+                    ],
+                    correct: [1]
+                },
+                {
+                    id: 3,
+                    question: "Які методи HTTP використовуються в AJAX?",
+                    options: [
+                        "GET та POST",
+                        "PUT та DELETE",
+                        "PATCH та OPTIONS",
+                        "всі перелічені"
+                    ],
+                    correct: [3]
+                }
+            ]
+        };
+
+        let currentQuestion = 0;
+        let answers = {};
+        let timerInterval;
+        let timeLeft = 10;
+        let userName = "";
+
+        function init() {
+            setTimeout(() => {
+                loadQuestion();
+            }, 500);
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= testData.questions.length) {
+                finishTest();
+                return;
+            }
+
+            const question = testData.questions[currentQuestion];
+            const app = document.getElementById('app');
+
+            app.innerHTML = `
+                <div class="timer">
+                    Залишилось: <strong id="timer">${timeLeft}</strong> секунд
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Питання ${currentQuestion + 1} з ${testData.questions.length}</div>
+                    <div class="question-text">${question.question}</div>
+
+                    <ul class="options">
+                        ${question.options.map((option, index) => `
+                            <li class="option" onclick="toggleOption(${index})">
+                                <input type="checkbox" id="opt${index}" value="${index}">
+                                <label for="opt${index}">${option}</label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <button class="btn" onclick="submitAnswer()">Відповісти</button>
+            `;
+
+            startTimer();
+        }
+
+        function toggleOption(index) {
+            const checkbox = document.getElementById(`opt${index}`);
+            checkbox.checked = !checkbox.checked;
+        }
+
+        function startTimer() {
+            timeLeft = 10;
+            updateTimer();
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitAnswer();
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const timerEl = document.getElementById('timer');
+            if (timerEl) {
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 3) {
+                    timerEl.style.color = '#ff0000';
+                }
+            }
+        }
+
+        function submitAnswer() {
+            clearInterval(timerInterval);
+
+            const selected = [];
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            checkboxes.forEach(cb => {
+                selected.push(parseInt(cb.value));
+            });
+
+            answers[currentQuestion] = selected;
+            sendAnswerToServer(currentQuestion, selected);
+
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function sendAnswerToServer(questionId, answer) {
+            console.log('Відправка на сервер:', {
+                question: questionId + 1,
+                answer: answer,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function finishTest() {
+            let correctAnswers = 0;
+            testData.questions.forEach((question, index) => {
+                const userAnswer = answers[index] || [];
+                const correctAnswer = question.correct;
+
+                if (JSON.stringify(userAnswer.sort()) === JSON.stringify(correctAnswer.sort())) {
+                    correctAnswers++;
+                }
+            });
+
+            const score = Math.round((correctAnswers / testData.questions.length) * 100);
+            let grade = "Незадовільно";
+
+            if (score >= 90) grade = "Відмінно";
+            else if (score >= 75) grade = "Добре";
+            else if (score >= 60) grade = "Задовільно";
+
+            userName = prompt("Введіть ваше ім'я:", "Користувач") || "Користувач";
+            const result = {
+                name: userName,
+                score: score,
+                grade: grade,
+                answers: answers,
+                timestamp: new Date().toISOString()
+            };
+
+            saveResultToServer(result);
+            showResult(userName, grade);
+        }
+
+        function saveResultToServer(result) {
+            console.log('Збереження результату:', JSON.stringify(result, null, 2));
+
+        }
+
+        function showResult(name, grade) {
+            document.getElementById('userName').textContent = name;
+            document.getElementById('userScore').textContent = grade;
+            document.getElementById('resultDialog').style.display = 'flex';
+        }
+
+        function closeDialog() {
+            document.getElementById('resultDialog').style.display = 'none';
+            currentQuestion = 0;
+            answers = {};
+            init();
+        }
+
+        init();
+    </script>
+</body>
+</html>
