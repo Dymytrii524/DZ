@@ -1,0 +1,1073 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практичне завдання №1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tabs {
+            background: white;
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+            .tab:hover {
+                background: #e9ecef;
+            }
+
+            .tab.active {
+                background: white;
+                color: #667eea;
+                border-bottom: 3px solid #667eea;
+            }
+
+        .tab-content {
+            background: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: none;
+            padding: 30px;
+        }
+
+            .tab-content.active {
+                display: block;
+            }
+
+        .formatter-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .error-badge {
+            background: #dc3545;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+            textarea:focus {
+                outline: none;
+                border-color: #667eea;
+            }
+
+        .output-box {
+            width: 100%;
+            min-height: 400px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            background: #f8f9fa;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+
+            .output-box.success {
+                border-color: #28a745;
+            }
+
+            .output-box.error {
+                border-color: #dc3545;
+                color: #dc3545;
+            }
+
+        .arrow-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .arrow {
+            font-size: 30px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            }
+
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        .catalog-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            min-height: 500px;
+        }
+
+        .users-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+            .users-list h3 {
+                margin-bottom: 15px;
+                color: #333;
+                font-size: 16px;
+            }
+
+        .user-btn {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+            .user-btn:hover {
+                border-color: #667eea;
+                background: #f0f4ff;
+            }
+
+            .user-btn.active {
+                background: #667eea;
+                color: white;
+                border-color: #667eea;
+            }
+
+        .user-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .placeholder {
+            text-align: center;
+            padding: 100px 20px;
+            color: #999;
+        }
+
+        .user-info-table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+            .user-info-table tr {
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+                .user-info-table tr:last-child {
+                    border-bottom: none;
+                }
+
+            .user-info-table td {
+                padding: 12px 15px;
+            }
+
+                .user-info-table td:first-child {
+                    font-weight: bold;
+                    background: #f8f9fa;
+                    width: 120px;
+                }
+
+        .posts-section {
+            margin-top: 20px;
+        }
+
+            .posts-section h3 {
+                margin-bottom: 15px;
+                color: #333;
+            }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .post-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+            .post-card:hover {
+                border-color: #667eea;
+                box-shadow: 0 3px 10px rgba(102, 126, 234, 0.1);
+            }
+
+        .post-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+        }
+
+        .post-body {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .formatter-container {
+                grid-template-columns: 1fr;
+            }
+
+            .arrow-section {
+                flex-direction: row;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .catalog-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>Практичне завдання №1</h1>
+            <div class="subtitle">Технологія AJAX, JSON, XMLHttpRequest</div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab(0)"> Завдання 1: JSON Formatter</button>
+            <button class="tab" onclick="switchTab(1)"> Завдання 2: Каталог копірайтерів</button>
+            <button class="tab" onclick="switchTab(2)"> Завдання 3: Пошук фільмів</button>
+        </div>
+        <div class="tab-content active" id="tab1">
+            <div class="formatter-container">
+                <div>
+                    <div class="section-title">
+                        Enter JSON data:
+                        <span id="errorBadge" style="display: none;" class="error-badge">format error</span>
+                    </div>
+                    <textarea id="inputJSON" placeholder='[{"id":1,"name":"Nick","age":23}]'></textarea>
+                </div>
+
+                <div class="arrow-section">
+                    <div class="arrow">▶</div>
+                    <button class="btn" onclick="formatJSON()">Format JSON</button>
+                </div>
+
+                <div>
+                    <div class="section-title">Formatted JSON data:</div>
+                    <div id="outputJSON" class="output-box">Відформатований JSON з'явиться тут...</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-secondary" onclick="loadJSONExample()">Приклад</button>
+                <button class="btn btn-secondary" onclick="clearJSON()">Очистити</button>
+            </div>
+        </div>
+        <div class="tab-content" id="tab2">
+            <div class="catalog-layout">
+                <div class="users-list">
+                    <h3>All users:</h3>
+                    <div id="usersList">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Завантаження...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-details" id="userDetails">
+                    <div class="placeholder">
+                        <div style="font-size: 60px; margin-bottom: 20px;">👈</div>
+                        <p>Оберіть копірайтера зі списку</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab3">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; color: #856404;">
+                    <strong> Інструкція:</strong> Введіть назву фільму та оберіть тип (Movie/Series/Episode).
+                    Натисніть Search для пошуку через OMDB API.
+                </div>
+
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 12px; max-width: 500px; margin: 0 auto 30px;">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Search:</h3>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Title:</label>
+                        <input type="text" id="movieTitle" placeholder="Enter movie title..."
+                               style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 6px; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Type:</label>
+                        <select id="movieType" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 6px; font-size: 14px;">
+                            <option value="">All</option>
+                            <option value="movie" selected>Movie</option>
+                            <option value="series">Series</option>
+                            <option value="episode">Episode</option>
+                        </select>
+                    </div>
+
+                    <button class="btn" onclick="searchMovies()" style="width: 100%;">Search</button>
+                </div>
+
+                <div id="movieResults"></div>
+                <div id="moviePagination" style="text-align: center; margin: 20px 0;"></div>
+                <div id="movieDetails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                    contents[i].classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                    contents[i].classList.remove('active');
+                }
+            });
+
+            if (index === 1 && !usersLoaded) {
+                loadUsers();
+            }
+        }
+        function formatJSON() {
+            const input = document.getElementById('inputJSON');
+            const output = document.getElementById('outputJSON');
+            const errorBadge = document.getElementById('errorBadge');
+
+            const inputText = input.value.trim();
+
+            if (!inputText) {
+                output.textContent = ' Поле порожнє. Введіть JSON дані.';
+                output.className = 'output-box error';
+                return;
+            }
+
+            try {
+                const jsonObject = JSON.parse(inputText);
+                const formattedJSON = JSON.stringify(jsonObject, null, 4);
+
+                output.textContent = formattedJSON;
+                output.className = 'output-box success';
+                errorBadge.style.display = 'none';
+            } catch (error) {
+                output.textContent = 'Помилка формату JSON!\n\n' + error.message;
+                output.className = 'output-box error';
+                errorBadge.style.display = 'inline-block';
+            }
+        }
+
+        function loadJSONExample() {
+            const example = '[{"id":1,"name":"Nick","age":23},{"id":2,"name":"John","age":20}]';
+            document.getElementById('inputJSON').value = example;
+            formatJSON();
+        }
+
+        function clearJSON() {
+            document.getElementById('inputJSON').value = '';
+            document.getElementById('outputJSON').textContent = 'Відформатований JSON з\'явиться тут...';
+            document.getElementById('outputJSON').className = 'output-box';
+            document.getElementById('errorBadge').style.display = 'none';
+        }
+        class User {
+            constructor(data, apiType = 'jsonplaceholder') {
+                this.id = data.id;
+
+                if (apiType === 'reqres') {
+
+                    this.name = `${data.first_name} ${data.last_name}`;
+                    this.username = data.first_name.toLowerCase();
+                    this.email = data.email;
+                    this.phone = 'Not available';
+                    this.website = 'Not available';
+                    this.address = {
+                        street: 'Not available',
+                        city: 'Not available'
+                    };
+                    this.company = {
+                        name: 'Not available'
+                    };
+                    this.avatar = data.avatar;
+                } else {
+                    this.name = data.name;
+                    this.username = data.username;
+                    this.email = data.email;
+                    this.phone = data.phone;
+                    this.website = data.website;
+                    this.address = data.address;
+                    this.company = data.company;
+                }
+            }
+        }
+
+        let users = [];
+        let usersLoaded = false;
+        let currentAPI = 'jsonplaceholder'; 
+
+        function loadUsers() {
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = '<div class="loading"><div class="spinner"></div>Завантаження...</div>';
+
+            tryJSONPlaceholder();
+        }
+
+        function tryJSONPlaceholder() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+            xhr.timeout = 5000; 
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            currentAPI = 'jsonplaceholder';
+                            users = data.map(userData => new User(userData, 'jsonplaceholder'));
+                            displayUsers();
+                            usersLoaded = true;
+                            console.log('✓ Використовується JSONPlaceholder API');
+                        } catch (e) {
+                            tryReqresAPI();
+                        }
+                    } else {
+                        tryReqresAPI();
+                    }
+                }
+            };
+
+            xhr.onerror = function() {
+                console.log(' JSONPlaceholder недоступний, перемикання на Reqres.in...');
+                tryReqresAPI();
+            };
+
+            xhr.ontimeout = function() {
+                console.log(' JSONPlaceholder timeout, перемикання на Reqres.in...');
+                tryReqresAPI();
+            };
+
+            xhr.send();
+        }
+
+        function tryReqresAPI() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://reqres.in/api/users?per_page=12', true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            currentAPI = 'reqres';
+                            users = response.data.map(userData => new User(userData, 'reqres'));
+                            displayUsers();
+                            usersLoaded = true;
+                            console.log('✓ Використовується Reqres.in API');
+
+                            const usersList = document.getElementById('usersList');
+                            const notice = document.createElement('div');
+                            notice.style.cssText = 'background: #fff3cd; padding: 10px; margin-bottom: 10px; border-radius: 6px; font-size: 12px; color: #856404;';
+                            notice.innerHTML = '⚠️ Використовується альтернативний API: Reqres.in';
+                            usersList.insertBefore(notice, usersList.firstChild);
+                        } catch (e) {
+                            const usersList = document.getElementById('usersList');
+                            usersList.innerHTML = '<div style="color: red; padding: 20px;">❌ Обидва API недоступні. Помилка: ' + e.message + '</div>';
+                        }
+                    } else {
+                        const usersList = document.getElementById('usersList');
+                        usersList.innerHTML = '<div style="color: red; padding: 20px;">❌ Всі API недоступні. Перевірте підключення до інтернету.</div>';
+                    }
+                }
+            };
+
+            xhr.onerror = function() {
+                const usersList = document.getElementById('usersList');
+                usersList.innerHTML = '<div style="color: red; padding: 20px;">❌ Помилка мережі. Неможливо завантажити дані з жодного API.</div>';
+            };
+
+            xhr.send();
+        }
+
+        function displayUsers() {
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = '';
+
+            users.forEach(user => {
+                const btn = document.createElement('button');
+                btn.className = 'user-btn';
+                btn.textContent = user.name;
+                btn.onclick = () => selectUser(user.id, btn);
+                usersList.appendChild(btn);
+            });
+        }
+
+        function selectUser(userId, btnElement) {
+            document.querySelectorAll('.user-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            btnElement.classList.add('active');
+
+            loadUserDetails(userId);
+        }
+
+        function loadUserDetails(userId) {
+            const userDetails = document.getElementById('userDetails');
+            userDetails.innerHTML = '<div class="loading"><div class="spinner"></div>Завантаження...</div>';
+
+            if (currentAPI === 'jsonplaceholder') {
+                loadFromJSONPlaceholder(userId);
+            } else {
+                loadFromReqres(userId);
+            }
+        }
+
+        function loadFromJSONPlaceholder(userId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `https://jsonplaceholder.typicode.com/users/${userId}`, true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            const user = new User(data, 'jsonplaceholder');
+                            displayUserDetails(user);
+                        } catch (e) {
+                            document.getElementById('userDetails').innerHTML = '<div style="color: red;">Помилка: ' + e.message + '</div>';
+                        }
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function loadFromReqres(userId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `https://reqres.in/api/users/${userId}`, true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            const user = new User(response.data, 'reqres');
+                            displayUserDetails(user);
+                        } catch (e) {
+                            document.getElementById('userDetails').innerHTML = '<div style="color: red;">Помилка: ' + e.message + '</div>';
+                        }
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function displayUserDetails(user) {
+            const userDetails = document.getElementById('userDetails');
+
+            let avatarHTML = '';
+            if (user.avatar) {
+                avatarHTML = `<img src="${user.avatar}" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 15px;" alt="${user.name}">`;
+            }
+
+            userDetails.innerHTML = `
+                ${avatarHTML}
+                <h3 style="margin-bottom: 15px; color: #667eea;">User info:</h3>
+                <table class="user-info-table">
+                    <tr>
+                        <td>Name:</td>
+                        <td>${user.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Username:</td>
+                        <td>${user.username}</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>${user.address.city}, ${user.address.street}</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>${user.email}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td>${user.phone}</td>
+                    </tr>
+                    <tr>
+                        <td>Website:</td>
+                        <td>${user.website}</td>
+                    </tr>
+                </table>
+                ${currentAPI === 'jsonplaceholder' ? '<button class="btn" onclick="loadUserPosts(' + user.id + ')">Show posts</button>' : '<div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 6px; font-size: 13px; color: #856404;">ℹ️ Reqres.in API не підтримує пости користувачів</div>'}
+                <div id="postsSection"></div>
+            `;
+        }
+
+        function loadUserPosts(userId) {
+            const postsSection = document.getElementById('postsSection');
+            postsSection.innerHTML = '<div class="loading"><div class="spinner"></div>Завантаження постів...</div>';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `https://jsonplaceholder.typicode.com/posts?userId=${userId}`, true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const posts = JSON.parse(xhr.responseText);
+                            displayPosts(posts);
+                        } catch (e) {
+                            postsSection.innerHTML = '<div style="color: red;">Помилка: ' + e.message + '</div>';
+                        }
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function displayPosts(posts) {
+            const postsSection = document.getElementById('postsSection');
+
+            let html = `<div class="posts-section">
+                <h3>User's posts: (${posts.length})</h3>
+                <div class="posts-grid">`;
+
+            posts.forEach(post => {
+                html += `
+                    <div class="post-card">
+                        <div class="post-title">${post.title}</div>
+                        <div class="post-body">${post.body}</div>
+                    </div>
+                `;
+            });
+
+            html += '</div></div>';
+            postsSection.innerHTML = html;
+        }
+        const OMDB_API_KEY = '3d4d8833'; 
+        let currentPage = 1;
+        let currentSearch = '';
+        let currentType = '';
+
+        function searchMovies(page = 1) {
+            const title = document.getElementById('movieTitle').value.trim();
+            const type = document.getElementById('movieType').value;
+            const resultsDiv = document.getElementById('movieResults');
+            const paginationDiv = document.getElementById('moviePagination');
+            const detailsDiv = document.getElementById('movieDetails');
+
+            if (!title) {
+                resultsDiv.innerHTML = '<div style="text-align: center; padding: 30px; color: #dc3545;">❌ Будь ласка, введіть назву фільму</div>';
+                return;
+            }
+
+            currentPage = page;
+            currentSearch = title;
+            currentType = type;
+
+            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Пошук фільмів...</div>';
+            paginationDiv.innerHTML = '';
+            detailsDiv.innerHTML = '';
+
+            let url = `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${encodeURIComponent(title)}&page=${page}`;
+            if (type) {
+                url += `&type=${type}`;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            if (data.Response === 'True') {
+                                displayMovies(data.Search, data.totalResults);
+                                if (parseInt(data.totalResults) > 10) {
+                                    displayPagination(parseInt(data.totalResults));
+                                }
+                            } else {
+                                resultsDiv.innerHTML = `<div style="text-align: center; padding: 50px;">
+                                    <div style="font-size: 60px; margin-bottom: 20px;">🎬</div>
+                                    <h3 style="color: #dc3545; margin-bottom: 10px;">Movie not found!</h3>
+                                    <p style="color: #666;">Спробуйте інший запит або змініть тип пошуку</p>
+                                </div>`;
+                                paginationDiv.innerHTML = '';
+                            }
+                        } catch (e) {
+                            resultsDiv.innerHTML = '<div style="color: red; padding: 20px; text-align: center;">Помилка парсингу: ' + e.message + '</div>';
+                        }
+                    } else {
+                        resultsDiv.innerHTML = '<div style="color: red; padding: 20px; text-align: center;">Помилка завантаження: ' + xhr.status + '</div>';
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function displayMovies(movies, totalResults) {
+            const resultsDiv = document.getElementById('movieResults');
+
+            let html = `<h3 style="text-align: center; margin-bottom: 20px; color: #333;">
+                Films: (${totalResults} результатів)
+            </h3>`;
+
+            html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">';
+
+            movies.forEach(movie => {
+                const poster = movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/200x300?text=No+Poster';
+                html += `
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer;"
+                         onmouseover="this.style.borderColor='#667eea'; this.style.transform='translateY(-5px)'"
+                         onmouseout="this.style.borderColor='#e0e0e0'; this.style.transform='translateY(0)'">
+                        <img src="${poster}" alt="${movie.Title}"
+                             style="width: 100%; height: 280px; object-fit: cover;">
+                        <div style="padding: 15px;">
+                            <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #333;
+                                        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                                 title="${movie.Title}">
+                                ${movie.Title}
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-bottom: 10px;">${movie.Year}</div>
+                            <div style="display: inline-block; background: #667eea; color: white; padding: 3px 10px;
+                                        border-radius: 12px; font-size: 11px; margin-bottom: 10px;">
+                                ${movie.Type}
+                            </div>
+                            <button onclick="showMovieDetails('${movie.imdbID}')"
+                                    style="width: 100%; padding: 8px; background: white; border: 2px solid #667eea;
+                                           color: #667eea; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px;"
+                                    onmouseover="this.style.background='#667eea'; this.style.color='white'"
+                                    onmouseout="this.style.background='white'; this.style.color='#667eea'">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+
+        function displayPagination(totalResults) {
+            const totalPages = Math.ceil(totalResults / 10);
+            const maxVisible = 7;
+            const paginationDiv = document.getElementById('moviePagination');
+
+            let html = '<div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">';
+            if (currentPage > 1) {
+                html += `<button onclick="searchMovies(${currentPage - 1})"
+                         style="padding: 8px 12px; border: 2px solid #e0e0e0; background: white;
+                                border-radius: 6px; cursor: pointer;">«</button>`;
+            }
+
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+            if (endPage - startPage < maxVisible - 1) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<button onclick="searchMovies(1)"
+                         style="padding: 8px 12px; border: 2px solid #e0e0e0; background: white;
+                                border-radius: 6px; cursor: pointer;">1</button>`;
+                if (startPage > 2) {
+                    html += '<span style="padding: 8px;">...</span>';
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === currentPage;
+                html += `<button onclick="searchMovies(${i})"
+                         style="padding: 8px 12px; border: 2px solid ${isActive ? '#667eea' : '#e0e0e0'};
+                                background: ${isActive ? '#667eea' : 'white'};
+                                color: ${isActive ? 'white' : '#333'};
+                                border-radius: 6px; cursor: pointer; font-weight: ${isActive ? 'bold' : 'normal'};">
+                    ${i}
+                </button>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += '<span style="padding: 8px;">...</span>';
+                }
+                html += `<button onclick="searchMovies(${totalPages})"
+                         style="padding: 8px 12px; border: 2px solid #e0e0e0; background: white;
+                                border-radius: 6px; cursor: pointer;">${totalPages}</button>`;
+            }
+            if (currentPage < totalPages) {
+                html += `<button onclick="searchMovies(${currentPage + 1})"
+                         style="padding: 8px 12px; border: 2px solid #e0e0e0; background: white;
+                                border-radius: 6px; cursor: pointer;">»</button>`;
+            }
+
+            html += '</div>';
+            paginationDiv.innerHTML = html;
+        }
+
+        function showMovieDetails(imdbID) {
+            const detailsDiv = document.getElementById('movieDetails');
+            detailsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Завантаження деталей...</div>';
+            detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${imdbID}&plot=full`, true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const movie = JSON.parse(xhr.responseText);
+                            displayMovieDetails(movie);
+                        } catch (e) {
+                            detailsDiv.innerHTML = '<div style="color: red;">Помилка: ' + e.message + '</div>';
+                        }
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function displayMovieDetails(movie) {
+            const detailsDiv = document.getElementById('movieDetails');
+            const poster = movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450?text=No+Poster';
+
+            let html = `
+                <div style="background: white; border-radius: 12px; padding: 30px; margin-top: 30px; border: 2px solid #667eea;">
+                    <button onclick="document.getElementById('movieDetails').innerHTML=''"
+                            style="float: right; background: #dc3545; color: white; border: none;
+                                   padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                        ✕ Закрити
+                    </button>
+
+                    <h2 style="color: #667eea; margin-bottom: 20px;">Film info:</h2>
+
+                    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 30px;">
+                        <div>
+                            <img src="${poster}" alt="${movie.Title}"
+                                 style="width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        </div>
+
+                        <div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa; width: 150px;">Title:</td>
+                                    <td style="padding: 12px;">${movie.Title}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">Released:</td>
+                                    <td style="padding: 12px;">${movie.Released}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">Genre:</td>
+                                    <td style="padding: 12px;">${movie.Genre}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">Country:</td>
+                                    <td style="padding: 12px;">${movie.Country}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">Director:</td>
+                                    <td style="padding: 12px;">${movie.Director}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">Writer:</td>
+                                    <td style="padding: 12px;">${movie.Writer}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">Actors:</td>
+                                    <td style="padding: 12px;">${movie.Actors}</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">Awards:</td>
+                                    <td style="padding: 12px;">${movie.Awards}</td>
+                                </tr>
+                                ${movie.imdbRating !== 'N/A' ? `
+                                <tr style="border-bottom: 1px solid #e0e0e0;">
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa;">IMDB Rating:</td>
+                                    <td style="padding: 12px;">
+                                        <span style="background: #f39c12; color: white; padding: 5px 12px; border-radius: 6px; font-weight: bold;">
+                                            ⭐ ${movie.imdbRating}/10
+                                        </span>
+                                    </td>
+                                </tr>
+                                ` : ''}
+                                ${movie.Plot !== 'N/A' ? `
+                                <tr>
+                                    <td style="padding: 12px; font-weight: bold; background: #f8f9fa; vertical-align: top;">Plot:</td>
+                                    <td style="padding: 12px; line-height: 1.6;">${movie.Plot}</td>
+                                </tr>
+                                ` : ''}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            detailsDiv.innerHTML = html;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const titleInput = document.getElementById('movieTitle');
+            if (titleInput) {
+                titleInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchMovies();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
